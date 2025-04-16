@@ -1,153 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Restaurant Info</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Info</title>
+    <link rel="stylesheet" href="css/header.css">
+    <style>
+      /* body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      } */
 
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 30px;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      width: 350px;
-      overflow: hidden;
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card-content {
-      padding: 20px;
-    }
-
-    .card-content h2 {
-      color: #ff6600;
-      margin: 0;
-    }
-
-    .card-content p {
-      margin: 8px 0;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 20px 20px;
-    }
-
-    .actions button {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .btn-update {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .btn-delete {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    @media screen and (max-width: 768px) {
-      .card {
-        width: 90%;
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px;
       }
-    }
-  </style>
-</head>
-<body>
 
-  <div class="card-container" id="restaurants"></div>
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        overflow: hidden;
+      }
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDmv_JzNAjosccdLlhaAvdHidcQXbl2yeE",
-      authDomain: "online-food-ordering-e8513.firebaseapp.com",
-      projectId: "online-food-ordering-e8513",
-      storageBucket: "online-food-ordering-e8513.appspot.com",
-      messagingSenderId: "498101486818",
-      appId: "1:498101486818:web:474691ca84d07b01ebcabb"
-    };
+      .card-content {
+        padding: 20px;
+      }
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+      .card-content h2 {
+        color: #ff6600;
+        margin: 0;
+      }
 
-    const fetchRestaurants = async () => {
-      const querySnapshot = await getDocs(collection(db, "owners"));
-      const container = document.getElementById("restaurants");
+      .card-content p {
+        margin: 8px 0;
+      }
 
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const id = docSnap.id;
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px 20px;
+      }
 
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-          <img src="${data.restaurantImage || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="Restaurant Image" />
+      .actions button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn-update {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-delete {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      @media screen and (max-width: 768px) {
+        .card {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav-container">
+        <div class="logo">
+          <i>🍴</i> <strong>Online Food</strong>
+        </div>
+        <!-- Add a menu toggle button for mobile -->
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <nav id="navbar">
+          <ul>
+            <li><a href="#">HOME</a></li>
+            <li><a href="#about-section">ABOUT</a></li>
+            <li><a href="#">CONTACT</a></li>
+            <li class="login-dropdown">
+              <a href="#">👤 Login</a>
+              <div class="dropdown-menu">
+                <a href="../user-dashboard.html">👤 User</a>
+                <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+  
+    <div class="card-container" id="restaurants"></div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        getDoc,
+        deleteDoc,
+        doc,
+      } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDmv_JzNAjosccdLlhaAvdHidcQXbl2yeE",
+        authDomain: "online-food-ordering-e8513.firebaseapp.com",
+        projectId: "online-food-ordering-e8513",
+        storageBucket: "online-food-ordering-e8513.appspot.com",
+        messagingSenderId: "498101486818",
+        appId: "1:498101486818:web:474691ca84d07b01ebcabb",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        let restaurantData1 = JSON.parse(localStorage.getItem("owners"));
+        console.log(restaurantData1);
+        if (!restaurantData1 || !restaurantData1.id) {
+          alert("Error: Patient data not found. Please register again.");
+          window.location.href = "restaurant-register.html";
+          return;
+        }
+        const restRef = doc(db, "owners", restaurantData1.id);
+        // console.log(restRef);
+        try {
+          const docsnap = await getDoc(restRef);
+          if (docsnap.exists()) {
+            const restaurant = docsnap.data();
+            console.log(restaurant);
+
+            const card = document.createElement("div");
+            const container = document.getElementById("restaurants");
+            console.log(card);
+
+            card.className = "card";
+            card.innerHTML = `
+          <img src="${
+            restaurant.restaurantImage ||
+            "https://via.placeholder.com/300x200?text=No+Image"
+          }" alt="Restaurant Image" />
           <div class="card-content">
-            <h2>${data.restaurantName}</h2>
-            <p><strong>Rating:</strong> ${data.restaurantRating}</p>
-            <p><strong>Location:</strong> ${data.restaurantLocation}</p>
-            <p><strong>Email:</strong> ${data.email}</p>
-            <p><strong>Item Name:</strong> ${data.itemName}</p>
+            <h2>${restaurant.restaurantName}</h2>
+            <p><strong>Rating:</strong> ${restaurant.restaurantRating}</p>
+            <p><strong>Location:</strong> ${restaurant.restaurantLocation}</p>
+            <p><strong>Email:</strong> ${restaurant.email}</p>
+            <p><strong>Item Name:</strong> ${restaurant.itemName}</p>
           </div>
           <div class="actions">
-            <button class="btn-update" onclick="updateRestaurant('${id}')">Update</button>
-            <button class="btn-delete" onclick="deleteRestaurant('${id}')">Delete</button>
+            <button class="btn-update" onclick="updateRestaurant('${
+              restaurant.id
+            }')">Update</button>
+            <button class="btn-delete" onclick="deleteRestaurant('${
+              restaurant.id
+            }')">Delete</button>
+            <button class="btn-add-items" onclick="addItemsRestaurant('${
+              restaurant.id
+            }')">Add items</button>
+             <button class="btn-view-items" onclick="viewItemsRestaurant('${
+              restaurant.id
+            }')">View Items</button>
           </div>
         `;
-        container.appendChild(card);
+
+            container.appendChild(card);
+          }
+        } catch (error) {
+          console.log(error);
+        }
       });
-    };
 
-    fetchRestaurants();
+     
+      window.addItemsRestaurant = (id) => {
+        console.log(id);
 
-    window.updateRestaurant = (id) => {
-      const selectedRestaurant = { id };
-      localStorage.setItem("owners", JSON.stringify(selectedRestaurant));
-      window.location.href = "restaurant-dashboard.html";
-    };
 
-    window.deleteRestaurant = async (id) => {
-      const confirmDelete = confirm("Are you sure you want to delete this restaurant?");
-      if (!confirmDelete) return;
+        window.location.href = `add-items.html?id=${id}`;
 
-      try {
-        await deleteDoc(doc(db, "owners", id));
-        alert("Restaurant deleted successfully!");
-        location.reload();
-      } catch (err) {
-        console.error("Delete failed:", err);
-        alert("Failed to delete restaurant.");
+      };
+      window.viewItemsRestaurant = (id) => {
+        console.log(id);
+        window.location.href=`view-items.html?id=${id}`;
       }
-    };
-  </script>
+      window.updateRestaurant = (id) => {
+        const selectedRestaurant = { id };
+        localStorage.setItem("owners", JSON.stringify(selectedRestaurant));
+        window.location.href = "restaurant-dashboard.html";
+      };
 
-</body>
+      window.deleteRestaurant = async (id) => {
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this restaurant?"
+        );
+        if (!confirmDelete) return;
+
+        try {
+          await deleteDoc(doc(db, "owners", id));
+          alert("Restaurant deleted successfully!");
+          location.reload();
+        } catch (err) {
+          console.error("Delete failed:", err);
+          alert("Failed to delete restaurant.");
+        }
+      };
+
+    </script>
+  </body>
 </html>

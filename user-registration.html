@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restaurant Signup</title>
-    <!-- <link rel="stylesheet" href="styles.css" /> -->
-    <!-- External CSS -->
+    <title>User Signup</title>
+    <!--<link rel="stylesheet" href="styles.css" /> -->
+    <link rel="stylesheet" href="css/header.css">
+   
   </head>
-  <link rel="stylesheet" href="css/header.css">
   <style>
     /* Apply modern fonts */
     /* body {
@@ -84,38 +84,37 @@
   </style>
   <body>
     <header>
-      <div class="nav-container">
-        <div class="logo">
-          <i>🍴</i> <strong>Online Food</strong>
+        <div class="nav-container">
+          <div class="logo">
+            <i>🍴</i> <strong>Online Food</strong>
+          </div>
+          <!-- Add a menu toggle button for mobile -->
+          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <nav id="navbar">
+            <ul>
+              <li><a href="index.html">HOME</a></li>
+              <li><a href="index.html">ABOUT</a></li>
+              <li><a href="index.html">CONTACT</a></li>
+              <li class="login-dropdown">
+                <a href="#">👤 Login</a>
+                <div class="dropdown-menu">
+                  <a href="../user-dashboard.html">👤 User</a>
+                  <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <!-- Add a menu toggle button for mobile -->
-        <div class="menu-toggle" id="menu-toggle">☰</div>
-        <nav id="navbar">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html"> About</a></li>
-            <li><a href="index.html"> Contact</a></li>
-            <li class="login-dropdown">
-              <a href="#">👤 Login</a>
-              <div class="dropdown-menu">
-                <a href="../user-dashboard.html">👤 User</a>
-                <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
+      </header>
 
     <div class="container">
       <div class="signup-card">
-        <h2>🍽️ Restaurant Registration</h2>
+        <h2>User Registration</h2>
         <form id="restaurant-signup-form">
           <input
             type="text"
             id="restaurant-name"
-            placeholder="Restaurant Name"
+            placeholder="Enter Your Name"
             required
           />
           <input type="email" id="signup-email" placeholder="Gmail" required />
@@ -136,7 +135,7 @@
         </form>
 
         <p>
-          Already have an account? <a href="restaurant-login.html">Login</a>
+          Already have an account? <a href="user-login.html">Login</a>
         </p>
       </div>
     </div>
@@ -154,7 +153,16 @@
         doc,
       } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
-      const firebaseConfig = {
+      const firebaseAuthConfig = {
+        apiKey: "AIzaSyAmwwfxHZ3nxMyGcAx-XIiWnVHtyLIsGPg",
+        authDomain: "user-login-food-ordering.firebaseapp.com",
+        projectId: "user-login-food-ordering",
+        storageBucket: "user-login-food-ordering.firebasestorage.app",
+        messagingSenderId: "395699560797",
+        appId: "1:395699560797:web:f28c9dbc85cfed87ae88b4",
+      };
+
+      const firebaseStoreConfig = {
         apiKey: "AIzaSyDmv_JzNAjosccdLlhaAvdHidcQXbl2yeE",
         authDomain: "online-food-ordering-e8513.firebaseapp.com",
         projectId: "online-food-ordering-e8513",
@@ -164,9 +172,12 @@
         measurementId: "G-WB3NM7E4DZ",
       };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      const appAuth = initializeApp(firebaseAuthConfig, "authApp");
+      const appStore = initializeApp(firebaseStoreConfig, "storeApp");
+
+      //   const app = initializeApp(firebaseStoreConfig);
+      const auth = getAuth(appAuth);
+      const db = getFirestore(appStore);
 
       // Get form elements
       const signupForm = document.getElementById("restaurant-signup-form");
@@ -193,15 +204,15 @@
             const user = userCredential.user;
 
             await setDoc(doc(db, "owners", user.uid), {
-              id:user.uid,
+              id: user.uid,
               restaurantName: restaurantNameInput.value,
               email: emailInput.value,
-              role:"restaurantowner",
+              role: "restaurantuser",
               createdAt: new Date(),
             });
-            console.log("hi frinzzz");
+            // console.log("hi frinzzz");
             alert("Signup Succesfully");
-            window.location.href = "restaurant-login.html";
+            window.location.href = "user-login.html";
           } catch (err) {
             match.innerText = err.message;
           }

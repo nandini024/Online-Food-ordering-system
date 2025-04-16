@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Food Restaurant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background: #000;
+      color: #fff;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+    }
+
+    .logo i {
+      color: #c69c6d;
+      margin-right: 8px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .login-dropdown {
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      color: #000;
+      top: 40px;
+      right: 0;
+      min-width: 160px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px;
+      color: #333;
+      text-decoration: none;
+      font-weight: normal;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f4f4f4;
+    }
+
+    .hero {
+      background: url('./glass.jpeg') no-repeat center center/cover;
+      height: 90vh;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 50px;
+    }
+
+    .hero p {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .view-btn {
+      background-color: #c69c6d;
+      padding: 10px 20px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 50px auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .feature-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 30px 20px;
+      text-align: center;
+      flex: 1;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card i {
+      font-size: 36px;
+      color: #c69c6d;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card span {
+      color: #c69c6d;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .daily-offers {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .daily-offers h2 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+
+    .offers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .offer-card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      width: calc(33.333% - 20px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .offer-card img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .offer-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .offer-price {
+      font-size: 18px;
+      color: #c69c6d;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+
+    .about-section {
+      padding: 80px 20px;
+      background-color: #fff;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 20px;
+    }
+
+    .about-text h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .about-text h2 span {
+      color: #c69c6d;
+    }
+
+    .about-text hr {
+      width: 120px;
+      border: 2px solid #c69c6d;
+      margin: 10px 0 20px 0;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 30px;
+    }
+
+    .about-stats div {
+      text-align: center;
+    }
+
+    .about-stats div h3 {
+      font-size: 32px;
+      font-weight: bold;
+      color: #c69c6d;
+    }
+
+    .about-stats div p {
+      font-size: 22px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .about-images {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .about-images img {
+      width: 30%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    @media screen and (max-width: 768px) {
+      .offers-container,
+      .features,
+      .about-container,
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .offer-card,
+      .feature-card {
+        width: 100%;
+      }
+
+      .about-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .dropdown-menu {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <i>🍴</i> <strong>Online Food</strong>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">HOME</a></li>
+          <li><a href="#about-section">ABOUT</a></li>
+          <li><a href="#">CONTACT</a></li>
+          <li class="login-dropdown">
+            <a href="#">👤 Login</a>
+            <div class="dropdown-menu">
+              <a href="../user-dashboard.html">👤 User</a>
+              <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <p>Welcome To</p>
+    <h2>Feel Taste</h2>
+    <p>VENUE OF THE BEST FOOD</p>
+    <button class="view-btn">VIEW MENU</button>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <i>🛎️</i>
+      <h3><strong>Magical</strong> <span>Atmosphere</span></h3>
+      <p>Wonderful serenity has taken possession of my entire soul, like these sweet mornings</p>
+    </div>
+    <div class="feature-card">
+      <i>🥄</i>
+      <h3><strong>Best Food</strong> <span>Quality</span></h3>
+      <p>Wonderful serenity has taken possession of my entire soul, like these sweet mornings</p>
+    </div>
+    <div class="feature-card">
+      <i>💲</i>
+      <h3><strong>Low Costing</strong> <span>Food</span></h3>
+      <p>Wonderful serenity has taken possession of my entire soul, like these sweet mornings</p>
+    </div>
+  </section>
+
+  <section class="daily-offers">
+    <h2>Our Daily Offers</h2>
+    <div class="offers-container">
+      <div class="offer-card">
+        <img src="sec31.jpg" alt="Spicy Club" />
+        <div class="offer-title">Spicy Club</div>
+        <p>Pork, chicken and vegetable fried rolls served with lettuce wraps</p>
+        <div class="offer-price">$48</div>
+      </div>
+      <div class="offer-card">
+        <img src="sec32.jpg" alt="Almond Baked Brie" />
+        <div class="offer-title">Almond Baked Brie</div>
+        <p>Pork, chicken and vegetable fried rolls served with lettuce wraps</p>
+        <div class="offer-price">$58</div>
+      </div>
+      <div class="offer-card">
+        <img src="sec33.jpg" alt="Tuscan Flatbread" />
+        <div class="offer-title">Tuscan Flatbread</div>
+        <p>Pork, chicken and vegetable fried rolls served with lettuce wraps</p>
+        <div class="offer-price">$52</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="about-section">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>Discover <span>Our Story</span></h2>
+        <hr>
+        <p>
+          When while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface
+          of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary,
+          I throw myself down among the tall grass by the trickling stream.
+        </p>
+        <div class="about-stats">
+          <div>
+            <h3>73</h3>
+            <p>Beverages</p>
+          </div>
+          <div>
+            <h3>173</h3>
+            <p>Food Items</p>
+          </div>
+          <div>
+            <h3>66</h3>
+            <p>Cooks</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-images">
+        <img src="./about.jfif" alt="Dish 1">
+        <img src="./about2.jpg" alt="Dish 2">
+        <img src="./about3.jpg" alt="Dish 3">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; Developed by Nandini.
+  </footer>
+
+  <script>
+    document.querySelector('.login-dropdown').addEventListener('click', function () {
+      const dropdown = this.querySelector('.dropdown-menu');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+
+    window.addEventListener('click', function (e) {
+      if (!e.target.closest('.login-dropdown')) {
+        const dropdown = document.querySelector('.dropdown-menu');
+        if (dropdown) dropdown.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html> 

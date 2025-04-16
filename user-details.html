@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery Address</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .address-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    .address-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff5e57;
+    }
+    .address-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    .address-box button {
+      width: 100%;
+      padding: 12px;
+      background: #ff5e57;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="address-box">
+    <h2>Delivery Address</h2>
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <input type="text" id="line1" placeholder="Address Line 1" required>
+    <input type="text" id="line2" placeholder="Address Line 2">
+    <input type="text" id="city" placeholder="City" required>
+    <input type="text" id="postal" placeholder="Postal Code" required>
+    <button onclick="submitAddress()">Continue to Payment</button>
+  </div>
+
+  <script>
+    function submitAddress() {
+      const address = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        line1: document.getElementById('line1').value,
+        line2: document.getElementById('line2').value,
+        city: document.getElementById('city').value,
+        postal: document.getElementById('postal').value,
+      };
+
+      // Store address in localStorage
+      localStorage.setItem("userAddress", JSON.stringify(address));
+      window.location.href = "review.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🍕 Cutie's Food Cart</title>
+  <link rel="stylesheet" href="css/headercart.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #fffaf4;
+      color: #333;
+    }
+
+    header {
+      background-color: #ff5e57;
+      padding: 15px 5%;
+      color: white;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffe8e5;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      background-color: #fff;
+      color: #333;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .login-dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 5px 10px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Go to items button */
+    .goto-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #gotoItemsBtn {
+      background-color: #ff5e57;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #gotoItemsBtn:hover {
+      background-color: #e74c3c;
+      transform: scale(1.05);
+    }
+
+    #menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin: 2rem auto;
+      max-width: 95%;
+    }
+
+    .item-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .item-card:hover {
+      transform: scale(1.02);
+    }
+
+    .item-card h3 {
+      color: #222;
+      margin-bottom: 8px;
+    }
+
+    .item-card p {
+      font-size: 1rem;
+      margin: 5px 0;
+    }
+
+    .item-card button {
+      background-color: #ff5e57;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff5e57;
+    }
+
+    #cartContainer {
+      max-width: 90%;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #ccc;
+      padding: 15px 0;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-control button {
+      padding: 5px 10px;
+      font-size: 16px;
+      background-color: #ff5e57;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #totalPrice {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #27ae60;
+      margin-top: 1rem;
+    }
+
+    #placeOrderBtn {
+      background-color: #27ae60;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      margin: 20px 0;
+      cursor: pointer;
+    }
+
+    #placeOrderBtn:hover {
+      background-color: #219150;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .item-card {
+        padding: 15px;
+      }
+
+      .item-card button {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">🍴 Cutie's Food Cart</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html">About</a></li>
+          <li><a href="index.html">Contact</a></li>
+          <li class="login-dropdown">
+            <a href="#">👤 Login</a>
+            <div class="dropdown-menu">
+              <a href="../user-dashboard.html">👤 User</a>
+              <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="goto-btn-container">
+    <button id="gotoItemsBtn" onclick="location.href='user-display-items.html'">🛒 Go to Your Items</button>
+  </div>
+
+  <div id="menu"></div>
+
+  <hr>
+
+  <h2>🛒 Your Cart</h2>
+  <div id="cartContainer"></div>
+  <div id="totalPrice"></div>
+
+  <div style="text-align: center;">
+    <button id="placeOrderBtn" onclick="placeorder()">Place Order</button>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmv_JzNAjosccdLlhaAvdHidcQXbl2yeE",
+      authDomain: "online-food-ordering-e8513.firebaseapp.com",
+      projectId: "online-food-ordering-e8513",
+      storageBucket: "online-food-ordering-e8513.appspot.com",
+      messagingSenderId: "498101486818",
+      appId: "1:498101486818:web:474691ca84d07b01ebcabb",
+      measurementId: "G-WB3NM7E4DZ",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const menuDiv = document.getElementById("menu");
+
+    const restaurantsRef = collection(db, "restaurants");
+    getDocs(restaurantsRef).then(snapshot => {
+      snapshot.forEach(doc => {
+        const restaurant = doc.data();
+        const restaurantName = restaurant.name || "Unknown Restaurant";
+
+        if (Array.isArray(restaurant.items)) {
+          restaurant.items.forEach(item => {
+            if (item.name && item.price != null) {
+              const price = Number(item.price);
+              showItem(item.name, price, restaurantName);
+            }
+          });
+        }
+      });
+    });
+
+    function showItem(name = "Unnamed", price = 0, restaurantName = "Unknown") {
+      const itemCard = document.createElement("div");
+      itemCard.className = "item-card";
+      itemCard.innerHTML = `
+        <h3>${name}</h3>
+        <p>From: <strong>${restaurantName}</strong></p>
+        <p>Price: ₹${price}</p>
+        <button onclick="addToCart('${name}', ${price})">Add to Cart</button>
+      `;
+      menuDiv.appendChild(itemCard);
+    }
+
+    window.addToCart = function(itemName, itemPrice) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingItem = cart.find(item => item.itemName === itemName);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ itemName, itemPrice, quantity: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      displayCart();
+    }
+
+
+    window.placeorder=function()
+    {
+      window.location.href="user-details.html"
+    }
+    
+
+    window.displayCart = function() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartContainer = document.getElementById("cartContainer");
+      cartContainer.innerHTML = "";
+
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <div class="cart-item-info">
+            <strong>${item.name}</strong><br>
+            ₹${item.price} × ${item.quantity} = ₹${item.price * item.quantity}
+          </div>
+          <div class="quantity-control">
+            <button onclick="updateQuantity(${index}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="updateQuantity(${index}, 1)">+</button>
+          </div>
+        `;
+        cartContainer.appendChild(itemDiv);
+      });
+
+      calculateTotal();
+    }
+
+    window.updateQuantity = function(index, change) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (cart[index]) {
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        displayCart();
+      }
+    }
+
+    function calculateTotal() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let total = 0;
+      cart.forEach(item => {
+        total += item.Price * item.quantity;
+      });
+      document.getElementById("totalPrice").innerText = `Total Price: ₹${total}`;
+    }
+
+    window.onload = displayCart;
+  </script>
+</body>
+</html>

@@ -76,32 +76,32 @@
   </style>
   <body>
     <header>
-      <div class="nav-container">
-        <div class="logo">
-          <i>🍴</i> <strong>Online Food</strong>
+        <div class="nav-container">
+          <div class="logo">
+            <i>🍴</i> <strong>Online Food</strong>
+          </div>
+          <!-- Add a menu toggle button for mobile -->
+          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <nav id="navbar">
+            <ul>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#about-section">ABOUT</a></li>
+              <li><a href="#">CONTACT</a></li>
+              <li class="login-dropdown">
+                <a href="#">👤 Login</a>
+                <div class="dropdown-menu">
+                  <a href="../user-dashboard.html">👤 User</a>
+                  <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <!-- Add a menu toggle button for mobile -->
-        <div class="menu-toggle" id="menu-toggle">☰</div>
-        <nav id="navbar">
-          <ul>
-            <li><a href="#">HOME</a></li>
-            <li><a href="#about-section">ABOUT</a></li>
-            <li><a href="#">CONTACT</a></li>
-            <li class="login-dropdown">
-              <a href="#">👤 Login</a>
-              <div class="dropdown-menu">
-                <a href="../user-dashboard.html">👤 User</a>
-                <a href="../restarurant-register.html">🏪 Restaurant Owner</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+      </header>
 
     <div class="container">
       <div class="login-card">
-        <h2>🍽️ Restaurant Owner Login</h2>
+        <h2>🍽️ User Login</h2>
         <form id="restaurant-login-form">
           <input
             type="email"
@@ -120,7 +120,7 @@
         </form>
         <p>
           Don't have an account?
-          <a href="restarurant-register.html">Register Here</a>
+          <a href="user-registration.html">Register Here</a>
         </p>
       </div>
     </div>
@@ -137,7 +137,16 @@
         doc,
       } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
-      const firebaseConfig = {
+      const firebaseAuthConfig = {
+        apiKey: "AIzaSyAmwwfxHZ3nxMyGcAx-XIiWnVHtyLIsGPg",
+        authDomain: "user-login-food-ordering.firebaseapp.com",
+        projectId: "user-login-food-ordering",
+        storageBucket: "user-login-food-ordering.firebasestorage.app",
+        messagingSenderId: "395699560797",
+        appId: "1:395699560797:web:f28c9dbc85cfed87ae88b4",
+      };
+
+      const firebaseStoreConfig = {
         apiKey: "AIzaSyDmv_JzNAjosccdLlhaAvdHidcQXbl2yeE",
         authDomain: "online-food-ordering-e8513.firebaseapp.com",
         projectId: "online-food-ordering-e8513",
@@ -147,18 +156,19 @@
         measurementId: "G-WB3NM7E4DZ",
       };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      const appAuth = initializeApp(firebaseAuthConfig, "authApp");
+      const appStore = initializeApp(firebaseStoreConfig, "storeApp");
 
+      //   const app = initializeApp(firebaseStoreConfig);
+      const auth = getAuth(appAuth);
+      const db = getFirestore(appStore);
+
+      
       // Get form elements
       const signupForm = document.querySelector("form");
       console.log(signupForm);
 
-      // const restaurantNameInput = document.getElementById("restaurant-name");
-      // const emailInput = document.getElementById("signup-email");
-      // const passwordInput = document.getElementById("signup-password");
-      // const confirmPasswordInput = document.getElementById("confirm-password");
+      
 
       signupForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -180,24 +190,26 @@
             const ownerResponse = ownerData.data();
             localStorage.setItem("owners", JSON.stringify(ownerResponse));
 
-            let isFirstTime = localStorage.getItem(
-              `firstRestaurantLogin-${user.uid}`
-            );
-            console.log(isFirstTime);
-            if (!isFirstTime) {
-              localStorage.setItem(`firstRestaurantLogin-${user.uid}`, "true");
-              window.location.href = "restaurant-dashboard.html";
-            } else {
-              window.location.href = "restaurant-data-display.html";
-            }
+            // let isFirstTime = localStorage.getItem(
+            //   `firstUserLogin-${user.uid}`
+            // );
+            // console.log(isFirstTime);
+            // if (!isFirstTime) {
+            //   localStorage.setItem(`firstUserLogin-${user.uid}`, "true");
+            //   window.location.href = "user-dashboard.html";
+            // } else {
+            //   window.location.href = "user-dashboard.html";
+            // }
 
             console.log(ownerResponse);
+            
 
             alert(`Login successful! Welcome ${ownerResponse.restaurantName}`);
+            window.location.href="user-dashboard.html"
            
           } else {
             alert("Login successful, but no additional user data found!");
-            window.location.href = "restaurant-register.html";
+            window.location.href = "user-registration.html";
           }
         } catch (err) {
           if (err.code === "auth/invalid-credential") {
